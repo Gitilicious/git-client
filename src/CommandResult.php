@@ -22,13 +22,13 @@ class CommandResult
         return $this->exitCode === 0;
     }
 
-    public function getOutput(int $lineNumber): string
+    public function getOutput(): CommandOutput
     {
-        return $this->stdOut->getLine($lineNumber);
+        return $this->stdOut;
     }
 
     public function getErrorMessage(): string
     {
-        return $this->stdErr->getLine(0);
+        return $this->stdErr->getLine(1);
     }
 }
