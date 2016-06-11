@@ -7,3 +7,7 @@ A simple Git client.
     "require": {
         "gitilicious/git-client": "dev-master"
     }
+
+## Status
+
+*Pre-alpha:* everything will change and everything will break.
