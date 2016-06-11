@@ -1,0 +1,37 @@
+{
+    "name": "gitilicious/git-client",
+    "homepage": "https://github.com/Gitilicious/git-client",
+    "description": "S imple git client",
+    "keywords": [
+        "git",
+        "client",
+        "wrapper"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pieter Hordijk",
+            "email": "gitilicous@pieterhordijk.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "^1.9",
+        "phpunit/phpunit": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gitilicious\\GitClient\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gitilicious\\GitClient\\Test\\": "test/"
+        }
+    }
+}
