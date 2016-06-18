@@ -2,6 +2,9 @@
 
 namespace Gitilicious\GitClient\Cli\Input;
 
+use Gitilicious\GitClient\Cli\NotFoundException;
+use Gitilicious\GitClient\Cli\PermissionDeniedException;
+
 class Binary
 {
     private $binary;
