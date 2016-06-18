@@ -2,6 +2,7 @@
 
 namespace Gitilicious\GitClient\Git;
 
+use Gitilicious\GitClient\Client;
 use Gitilicious\GitClient\FileSystem\Directory;
 
 class Repository
