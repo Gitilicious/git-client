@@ -2,35 +2,26 @@
 
 namespace Gitilicious\GitClient;
 
+use Gitilicious\GitClient\FileSystem\Directory;
+
 class Repository
 {
     private $client;
 
-    private $path;
-
-    private $owner;
+    private $directory;
 
     private $name;
 
-    public function __construct(Client $client, string $path, string $owner, string $name)
+    public function __construct(Client $client, Directory $directory, string $name)
     {
-        $this->client = $client;
-        $this->path   = $path;
-        $this->owner  = $owner;
-        $this->name   = $name;
+        $this->client    = $client;
+        $this->directory = $directory;
+        $this->name      = $name;
     }
 
-    public static function create(Client $client, string $directory, string $owner, string $name): Repository
+    public static function createBare(Client $client, Directory $directory, string $name): Repository
     {
-        $repositoryDirectory = $directory . '/' . $owner . '/' . $name . '.git';
-
-        if (!is_dir($repositoryDirectory)) {
-            @mkdir($repositoryDirectory, 0770, true);
-        }
-
-        if (!is_dir($repositoryDirectory)) {
-            throw new FileSystemException(error_get_last()['message'], error_get_last()['type']);
-        }
+        $repositoryDirectory = $directory->getPath() . '/' . $name;
 
         $result = $client->run($repositoryDirectory, 'init', '--bare');
 
@@ -38,55 +29,52 @@ class Repository
             throw new GitException($result->getErrorMessage());
         }
 
-        return new self($client, $directory, $owner, $name . '.git');
+        return new self($client, $directory, $name);
     }
 
-    public static function clone(
-        Client $client,
-        string $directory,
-        string $owner,
-        string $name,
-        string $repository
-    ): Repository
+    public static function create(Client $client, Directory $directory, string $name): Repository
     {
-        $repositoryDirectory = $directory . '/' . $owner . '/' . $name;
+        $repositoryDirectory = $directory->getPath() . '/' . $name;
 
-        if (!is_dir($repositoryDirectory)) {
-            @mkdir($repositoryDirectory, 0770, true);
-        }
-
-        if (!is_dir($repositoryDirectory)) {
-            throw new FileSystemException(error_get_last()['message'], error_get_last()['type']);
-        }
-
-        $result = $client->run($repositoryDirectory, 'clone', $repository, $repositoryDirectory);
+        $result = $client->run($repositoryDirectory, 'init');
 
         if (!$result->isSuccess()) {
             throw new GitException($result->getErrorMessage());
         }
 
-        return new self($client, $directory, $owner, $name);
+        return new self($client, $directory, $name);
+    }
+
+    public function clone(Directory $directory, string $name): Repository
+    {
+        $repositoryDirectory = $directory->getPath() . '/' . $name;
+
+        $result = $this->client->run($repositoryDirectory, 'clone', $this->getPath(), $repositoryDirectory);
+
+        if (!$result->isSuccess()) {
+            throw new GitException($result->getErrorMessage());
+        }
+
+        return new self($this->client, $directory, $name);
     }
 
     public function getPath(): string
     {
-        return sprintf('%s/%s/%s', $this->path, $this->owner, $this->name);
+        return $this->directory->getPath() . '/' . $this->name;
     }
 
     public function addDefaultReadMe()
     {
-        $repositoryDirectory = $this->path . '/' . $this->owner . '/' . $this->name;
+        file_put_contents($this->getPath() . '/README.md', "# {$this->name}\n");
 
-        file_put_contents($repositoryDirectory . '/README.md', "# {$this->name}\n");
-
-        $this->client->run($repositoryDirectory, 'add', 'README.md');
-        $this->client->run($repositoryDirectory, 'commit', '-m', 'Added readme');
-        $this->client->run($repositoryDirectory, 'push');
+        $this->client->run($this->getPath(), 'add', 'README.md');
+        $this->client->run($this->getPath(), 'commit', '-m', 'Added readme');
+        $this->client->run($this->getPath(), 'push');
     }
 
     public function getBranches(): Branches
     {
-        $result = $this->client->run($this->path . '/' . $this->owner . '/' . $this->name, 'branch');
+        $result = $this->client->run($this->getPath(), 'branch');
 
         if (!$result->isSuccess()) {
             throw new GitException('Cannot list the branches.');
