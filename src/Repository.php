@@ -22,7 +22,7 @@ class Repository
 
     public static function create(Client $client, string $directory, string $owner, string $name): Repository
     {
-        $repositoryDirectory = $directory . '/' . $owner . '/' . $name;
+        $repositoryDirectory = $directory . '/' . $owner . '/' . $name . '.git';
 
         if (!is_dir($repositoryDirectory)) {
             @mkdir($repositoryDirectory, 0770, true);
@@ -38,7 +38,7 @@ class Repository
             throw new GitException($result->getErrorMessage());
         }
 
-        return new self($client, $directory, $owner, $name);
+        return new self($client, $directory, $owner, $name . '.git');
     }
 
     public function getBranches(): Branches
