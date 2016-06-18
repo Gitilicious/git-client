@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="true"
+         backupStaticAttributes="false"
+         bootstrap="tests/bootstrap.php"
+         colors="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="false"
+         mapTestClassNameToCoveredClassName="false"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+         strict="false"
+         verbose="false">
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+            <exclude>
+            </exclude>
+        </whitelist>
+    </filter>
+    <php>
+        <!-- @todo find something willing to interact with https://github.com/sebastianbergmann/phpunit/issues/634#issuecomment-144912618 to fix this... -->
+        <env name="git_binary" value="/usr/bin/git"/>
+    </php>
+</phpunit>
