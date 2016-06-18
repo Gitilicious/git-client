@@ -18,4 +18,9 @@ class Binary
 
         $this->binary = $binary;
     }
+
+    public function getExecutable(): string
+    {
+        return $this->binary;
+    }
 }
