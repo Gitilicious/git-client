@@ -3,6 +3,7 @@
 namespace Gitilicious\GitClient;
 
 use Gitilicious\GitClient\Cli\Client as CliClient;
+use Gitilicious\GitClient\Cli\Input\PlainArgument;
 use Gitilicious\GitClient\Cli\Output\Result;
 
 class Client
@@ -16,6 +17,6 @@ class Client
 
     public function run(string $path, ...$arguments): Result
     {
-        return $this->client($path, ...$arguments);
+        return $this->client(array_merge([new PlainArgument($path), $arguments]));
     }
 }

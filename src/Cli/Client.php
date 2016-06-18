@@ -14,7 +14,7 @@ class Client
         $this->binary = $binary;
     }
 
-    public function run(string $path, ...$arguments): Result
+    public function run(array $arguments = []): Result
     {
         $descriptorSpec = [
            ['pipe', 'r'],
