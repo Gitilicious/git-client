@@ -25,6 +25,13 @@
         <whitelist>
             <directory suffix=".php">src/</directory>
             <exclude>
+                <file>src/Cli/Exception.php</file>
+                <file>src/Cli/NotFoundException.php</file>
+                <file>src/Cli/PermissionDeniedException.php</file>
+                <file>src/FileSystem/Exception.php</file>
+                <file>src/FileSystem/ExistsException.php</file>
+                <file>src/FileSystem/NotFoundException.php</file>
+                <file>src/FileSystem/PermissionDeniedException.php</file>
             </exclude>
         </whitelist>
     </filter>
