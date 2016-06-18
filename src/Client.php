@@ -13,13 +13,13 @@ class Client
 
     public function run(string $path, ...$arguments): CommandResult
     {
-        $descriptorspec = [
+        $descriptorSpec = [
            ['pipe', 'r'],
            ['pipe', 'w'],
            ['pipe', 'w'],
         ];
 
-        $process = proc_open($this->buildCommand($arguments), $descriptorspec, $pipes, $path);
+        $process = proc_open($this->buildCommand($arguments), $descriptorSpec, $pipes, $path);
 
         $stdOut = stream_get_contents($pipes[1]);
         $stdErr = stream_get_contents($pipes[2]);
