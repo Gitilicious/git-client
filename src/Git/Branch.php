@@ -13,6 +13,6 @@ class Branch
 
     public function getName(): string
     {
-        $this->name;
+        return $this->name;
     }
 }
