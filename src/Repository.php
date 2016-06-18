@@ -41,6 +41,33 @@ class Repository
         return new self($client, $directory, $owner, $name . '.git');
     }
 
+    public static function clone(
+        Client $client,
+        string $directory,
+        string $owner,
+        string $name,
+        string $repository
+    ): Repository
+    {
+        $repositoryDirectory = $directory . '/' . $owner . '/' . $name;
+
+        if (!is_dir($repositoryDirectory)) {
+            @mkdir($repositoryDirectory, 0770, true);
+        }
+
+        if (!is_dir($repositoryDirectory)) {
+            throw new FileSystemException(error_get_last()['message'], error_get_last()['type']);
+        }
+
+        $result = $client->run($repositoryDirectory, 'clone', $repository, $repositoryDirectory);
+
+        if (!$result->isSuccess()) {
+            throw new GitException($result->getErrorMessage());
+        }
+
+        return new self($client, $directory, $owner, $name);
+    }
+
     public function getBranches(): Branches
     {
         $result = $this->client->run($this->path . '/' . $this->owner . '/' . $this->name, 'branch');
