@@ -1,17 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Gitilicious\GitClient;
+namespace Gitilicious\GitClient\Cli;
+
+use Gitilicious\GitClient\Cli\Input\Binary;
+use Gitilicious\GitClient\Cli\Output\Result;
 
 class Client
 {
-    private $gitBinary;
+    private $binary;
 
-    public function __construct(string $gitBinary)
+    public function __construct(Binary $binary)
     {
-        $this->gitBinary = $gitBinary;
+        $this->binary = $binary;
     }
 
-    public function run(string $path, ...$arguments): CommandResult
+    public function run(string $path, ...$arguments): Result
     {
         $descriptorSpec = [
            ['pipe', 'r'],
@@ -28,19 +31,19 @@ class Client
             fclose($pipe);
         }
 
-        return new CommandResult(proc_close($process), $stdOut, $stdErr);
+        return new Result(proc_close($process), $stdOut, $stdErr);
     }
 
     private function buildCommand(array $arguments): string
     {
-        $command = [];
+        $fullCommand = [];
 
-        $command[] = $this->gitBinary;
+        $fullCommand[] = $this->binary;
 
         foreach ($arguments as $argument) {
-            $command[] = escapeshellarg($argument);
+            $fullCommand[] = escapeshellarg($argument);
         }
 
-        return implode(' ', $command);
+        return implode(' ', $fullCommand);
     }
 }
