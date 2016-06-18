@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Gitilicious\GitClient;
+namespace Gitilicious\GitClient\Git;
 
 use Gitilicious\GitClient\FileSystem\Directory;
 
