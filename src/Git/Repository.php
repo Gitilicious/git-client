@@ -64,15 +64,6 @@ class Repository
         return $this->directory->getPath() . '/' . $this->name;
     }
 
-    public function addDefaultReadMe()
-    {
-        file_put_contents($this->getPath() . '/README.md', "# {$this->name}\n");
-
-        $this->client->run($this->getPath(), 'add', 'README.md');
-        $this->client->run($this->getPath(), 'commit', '-m', 'Added readme');
-        $this->client->run($this->getPath(), 'push');
-    }
-
     public function getBranches(): Branches
     {
         $result = $this->client->run($this->getPath(), 'branch');
