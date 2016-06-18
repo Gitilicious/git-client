@@ -26,7 +26,7 @@ class Repository
         $result = $client->run($repositoryDirectory, 'init', '--bare');
 
         if (!$result->isSuccess()) {
-            throw new GitException($result->getErrorMessage());
+            throw new Exception($result->getErrorMessage());
         }
 
         return new self($client, $directory, $name);
@@ -39,7 +39,7 @@ class Repository
         $result = $client->run($repositoryDirectory, 'init');
 
         if (!$result->isSuccess()) {
-            throw new GitException($result->getErrorMessage());
+            throw new Exception($result->getErrorMessage());
         }
 
         return new self($client, $directory, $name);
@@ -52,7 +52,7 @@ class Repository
         $result = $this->client->run($repositoryDirectory, 'clone', $this->getPath(), $repositoryDirectory);
 
         if (!$result->isSuccess()) {
-            throw new GitException($result->getErrorMessage());
+            throw new Exception($result->getErrorMessage());
         }
 
         return new self($this->client, $directory, $name);
@@ -77,7 +77,7 @@ class Repository
         $result = $this->client->run($this->getPath(), 'branch');
 
         if (!$result->isSuccess()) {
-            throw new GitException('Cannot list the branches.');
+            throw new Exception('Cannot list the branches.');
         }
 
         $branches = new Branches($this->client);

@@ -2,6 +2,6 @@
 
 namespace Gitilicious\GitClient\Git;
 
-class GitException extends \Exception
+class Exception extends \Exception
 {
 }
