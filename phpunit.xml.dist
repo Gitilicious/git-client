@@ -36,7 +36,7 @@
         </whitelist>
     </filter>
     <php>
-        <!-- @todo find something willing to interact with https://github.com/sebastianbergmann/phpunit/issues/634#issuecomment-144912618 to fix this... -->
+        <!-- @todo find someone willing to deal with https://github.com/sebastianbergmann/phpunit/issues/634#issuecomment-144912618 to fix this... -->
         <env name="git_binary" value="/usr/bin/git"/>
     </php>
 </phpunit>
