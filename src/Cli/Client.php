@@ -2,6 +2,7 @@
 
 namespace Gitilicious\GitClient\Cli;
 
+use Gitilicious\GitClient\Cli\Input\Argument;
 use Gitilicious\GitClient\Cli\Input\Binary;
 use Gitilicious\GitClient\Cli\Output\Result;
 
@@ -38,12 +39,11 @@ class Client
     {
         $fullCommand = [];
 
-        $fullCommand[] = $this->binary;
-
         foreach ($arguments as $argument) {
-            $fullCommand[] = escapeshellarg($argument);
+            /* @var $argument Argument */
+            $fullCommand[] = escapeshellarg($argument->getArgument());
         }
 
-        return implode(' ', $fullCommand);
+        return $this->binary->getExecutable() . ' ' . implode(' ', $fullCommand);
     }
 }
