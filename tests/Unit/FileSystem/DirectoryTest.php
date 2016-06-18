@@ -84,6 +84,7 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
         Directory::create($newDirectory . '/foobar');
 
         chmod($newDirectory, 0770);
+        rmdir($newDirectory . '/foobar');
         rmdir($newDirectory);
     }
 }
