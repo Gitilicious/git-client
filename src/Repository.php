@@ -68,6 +68,11 @@ class Repository
         return new self($client, $directory, $owner, $name);
     }
 
+    public function getPath(): string
+    {
+        return sprintf('%s/%s/%s', $this->path, $this->owner, $this->name);
+    }
+
     public function getBranches(): Branches
     {
         $result = $this->client->run($this->path . '/' . $this->owner . '/' . $this->name, 'branch');
