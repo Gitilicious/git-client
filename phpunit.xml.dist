@@ -32,6 +32,7 @@
                 <file>src/FileSystem/ExistsException.php</file>
                 <file>src/FileSystem/NotFoundException.php</file>
                 <file>src/FileSystem/PermissionDeniedException.php</file>
+                <file>src/Git/Exception.php</file>
             </exclude>
         </whitelist>
     </filter>
