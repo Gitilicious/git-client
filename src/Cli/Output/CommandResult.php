@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace Gitilicious\GitClient;
+namespace Gitilicious\GitClient\Cli\Output;
 
-class CommandResult
+class Result
 {
-    private $exitCode;
+    private $exitCode = 0;
 
-    private $stdOut = [];
+    private $stdOut;
 
-    private $stdErr = [];
+    private $stdErr;
 
     public function __construct(int $exitCode, string $stdOut, string $stdErr)
     {
         $this->exitCode = $exitCode;
-        $this->stdOut   = new CommandOutput($stdOut);
-        $this->stdErr   = new CommandOutput($stdErr);
+        $this->stdOut   = new Output($stdOut);
+        $this->stdErr   = new Output($stdErr);
     }
 
     public function isSuccess(): bool
@@ -22,7 +22,7 @@ class CommandResult
         return $this->exitCode === 0;
     }
 
-    public function getOutput(): CommandOutput
+    public function getOutput(): Output
     {
         return $this->stdOut;
     }

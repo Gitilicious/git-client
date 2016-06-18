@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Gitilicious\GitClient;
+namespace Gitilicious\GitClient\Cli\Output;
 
-class CommandOutput
+class Output
 {
     private $lines = [];
 
