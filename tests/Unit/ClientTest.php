@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Gitilicious\GitClient\Test\Unit\FileSystem;
+namespace Gitilicious\GitClient\Test\Unit;
 
 use Gitilicious\GitClient\Cli\Input\Argument;
 use Gitilicious\GitClient\Cli\Input\ShortFlag;
