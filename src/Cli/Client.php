@@ -5,6 +5,7 @@ namespace Gitilicious\GitClient\Cli;
 use Gitilicious\GitClient\Cli\Input\Argument;
 use Gitilicious\GitClient\Cli\Input\Binary;
 use Gitilicious\GitClient\Cli\Output\Result;
+use Gitilicious\GitClient\FileSystem\Directory;
 
 class Client
 {
@@ -15,7 +16,7 @@ class Client
         $this->binary = $binary;
     }
 
-    public function run(array $arguments = []): Result
+    public function run(Directory $workingDirectory, Argument ...$arguments): Result
     {
         $descriptorSpec = [
            ['pipe', 'r'],
@@ -23,7 +24,7 @@ class Client
            ['pipe', 'w'],
         ];
 
-        $process = proc_open($this->buildCommand($arguments), $descriptorSpec, $pipes, $path);
+        $process = proc_open($this->buildCommand(...$arguments), $descriptorSpec, $pipes, $workingDirectory->getPath());
 
         $stdOut = stream_get_contents($pipes[1]);
         $stdErr = stream_get_contents($pipes[2]);
@@ -35,12 +36,11 @@ class Client
         return new Result(proc_close($process), $stdOut, $stdErr);
     }
 
-    private function buildCommand(array $arguments): string
+    private function buildCommand(Argument ...$arguments): string
     {
         $fullCommand = [];
 
         foreach ($arguments as $argument) {
-            /* @var $argument Argument */
             $fullCommand[] = escapeshellarg($argument->getArgument());
         }
 
