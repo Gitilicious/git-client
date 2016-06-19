@@ -19,9 +19,9 @@ class Client
     public function run(Directory $workingDirectory, Argument ...$arguments): Result
     {
         $descriptorSpec = [
-           ['pipe', 'r'],
-           ['pipe', 'w'],
-           ['pipe', 'w'],
+            ['pipe', 'r'],
+            ['pipe', 'w'],
+            ['pipe', 'w'],
         ];
 
         $process = proc_open($this->buildCommand(...$arguments), $descriptorSpec, $pipes, $workingDirectory->getPath());
