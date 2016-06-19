@@ -75,6 +75,10 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
             return;
         }
 
+        $this->markTestSkipped('Is there any sane way to test this?');
+
+        return;
+
         $newDirectory = DATA_DIR . '/new-directory';
 
         Directory::create($newDirectory, 0444);
