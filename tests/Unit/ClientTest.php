@@ -2,10 +2,12 @@
 
 namespace Gitilicious\GitClient\Test\Unit\FileSystem;
 
+use Gitilicious\GitClient\Cli\Input\Argument;
 use Gitilicious\GitClient\Cli\Input\ShortFlag;
 use Gitilicious\GitClient\Cli\Output\Result;
 use Gitilicious\GitClient\Client;
 use \Gitilicious\GitClient\Cli\Client as CliClient;
+use Gitilicious\GitClient\FileSystem\Directory;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,16 +16,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $client = new Client(new class extends CliClient {
             public function __construct() {}
 
-            public function run(array $arguments = []): Result
+            public function run(Directory $workingDirectory, Argument ...$arguments): Result
             {
-                \PHPUnit_Framework_Assert::assertSame(2, count($arguments));
-                \PHPUnit_Framework_Assert::assertSame('-foo', $arguments[1]->getArgument());
+                \PHPUnit_Framework_Assert::assertSame(1, count($arguments));
+                \PHPUnit_Framework_Assert::assertSame('-foo', $arguments[0]->getArgument());
 
                 return new Result(0, '', '');
             }
         });
 
-        $client->run(DATA_DIR, new ShortFlag('foo'));
+        $client->run(new Directory(DATA_DIR), new ShortFlag('foo'));
     }
 
     public function testRunReturnsResult()
@@ -31,13 +33,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $client = new Client(new class extends CliClient {
             public function __construct() {}
 
-            public function run(array $arguments = []): Result
+            public function run(Directory $workingDirectory, Argument ...$arguments): Result
             {
                 return new Result(0, '', '');
             }
         });
 
-        $result = $client->run(DATA_DIR, new ShortFlag('foo'));
+        $result = $client->run(new Directory(DATA_DIR), new ShortFlag('foo'));
 
         $this->assertInstanceOf(Result::class, $result);
     }
