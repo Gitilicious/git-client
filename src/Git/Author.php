@@ -11,7 +11,7 @@ class Author
     public function __construct(string $name, string $emailAddress)
     {
         if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
-            throw new \RuntimeException(sprintf('The provided email address `%s` is not valid.', $this->emailAddress));
+            throw new \RuntimeException(sprintf('The provided email address `%s` is not valid.', $emailAddress));
         }
 
         $this->name         = $name;
