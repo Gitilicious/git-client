@@ -4,8 +4,8 @@ namespace Gitilicious\GitClient;
 
 use Gitilicious\GitClient\Cli\Client as CliClient;
 use Gitilicious\GitClient\Cli\Input\Argument;
-use Gitilicious\GitClient\Cli\Input\PlainArgument;
 use Gitilicious\GitClient\Cli\Output\Result;
+use Gitilicious\GitClient\FileSystem\Directory;
 
 class Client
 {
@@ -16,8 +16,8 @@ class Client
         $this->cliClient = $cliClient;
     }
 
-    public function run(string $path, Argument ...$arguments): Result
+    public function run(Directory $workingDirectory, Argument ...$arguments): Result
     {
-        return $this->cliClient->run(array_merge([new PlainArgument($path)], $arguments));
+        return $this->cliClient->run($workingDirectory, ...$arguments);
     }
 }
