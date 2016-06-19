@@ -30,6 +30,6 @@ class Author
 
     public function getFormatted(): string
     {
-        return sprintf('%s <$s>', $this->name, $this->emailAddress);
+        return sprintf('%s <%s>', $this->name, $this->emailAddress);
     }
 }

@@ -34,6 +34,6 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $author = new Author('Git User', 'git@example.com');
 
-        $this->assertSame('Git USer <git@example.com>', $author->getEmailAddress());
+        $this->assertSame('Git USer <git@example.com>', $author->getFormatted());
     }
 }
