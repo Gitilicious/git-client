@@ -13,4 +13,21 @@ class BranchesTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($branches->add(new Branch('foo')));
     }
+
+    public function testCountWithoutBranches()
+    {
+        $branches = new Branches();
+
+        $this->assertSame(0, count($branches));
+    }
+
+    public function testCountWithBranches()
+    {
+        $branches = new Branches();
+
+        $branches->add(new Branch('foo'));
+        $branches->add(new Branch('bar'));
+
+        $this->assertSame(2, count($branches));
+    }
 }
